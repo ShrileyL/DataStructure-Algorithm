@@ -1,12 +1,12 @@
 //
 //  main.cpp
-//  templatetest
+//  Function Template
 //
 //  Created by KevinLiu on 16/9/6.
 //  Copyright © 2016年 KevinLiu. All rights reserved.
 //
 
-/*Function Template
+/*General form:
 template <class type> ret-type fuc_name(paramenter list)
 {
 	//body of function
