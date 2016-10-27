@@ -27,7 +27,7 @@ public:
 class Dog:public Animal
 {
 public:
-    Dog(){cout << "class Animal constructor is called." <<endl;};
+    Dog(){cout << "class Dog constructor is called." <<endl;};
     virtual ~Dog(){cout << "class Dog destructor is called." << endl;};
 
     void move() const{cout << "Dog moves 5 steps." << endl;};
