@@ -43,7 +43,7 @@ public:
 int main()
 {
     AtomicClock ac;
-    Timekeeper *ptk =ac.getTimeKeeper();
+    Timekeeper *ptk =ac.getTimeKeeper();//this is a factory function
     delete ptk;
     return 0;
 }
