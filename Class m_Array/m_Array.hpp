@@ -29,6 +29,7 @@ public:
     void selectSort();
     void quickSort();
     void mergeSort();
+    void bubbleSort();
     
 };
 

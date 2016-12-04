@@ -12,7 +12,8 @@
 #include <string>
 using namespace std;
 
-int* insertSort(int arr[], int n);
+int* insertSort(int *arr, int n);
+int* selectSort(int* arr,int n);
 void display(int* arr,int n);
 
 int main()
@@ -22,7 +23,7 @@ int main()
    
 //    display(array,5);
 
-    display(insertSort(array, 5),5);
+    display(selectSort(array, 5),5);
     
     return 0;
 }
@@ -50,4 +51,30 @@ void display(int* arr,int n)
     for (int i = 0; i < n; ++i) {
         cout << *(arr+i) <<endl;
     }
+}
+
+int* selectSort(int* array, int n)
+{
+    for (int i = n -1; i >= 1; i--)
+    {
+        int currentMaxIndex = 0;
+        int currentMax = *array;
+        
+        for (int j = 1; j <= i; ++j)
+        {
+            if (currentMax < *(array+j))
+            {
+                currentMax =*(array+j);
+                currentMaxIndex = j;
+            }
+        }
+        
+        //swap arr[j] with arr[currentMaxIndex] if necessary
+        if (currentMaxIndex != i)
+        {
+            *(array+currentMaxIndex) = *(array+i);
+            *(array+i) = currentMax;
+        }
+    }
+    return array;
 }

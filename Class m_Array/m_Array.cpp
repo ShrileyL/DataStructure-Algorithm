@@ -48,5 +48,30 @@ void m_Array<T>::insertSort()
 template <typename T>
 void m_Array<T>::selectSort()
 {
-    
+    for (int i = lenth -1; i >= 1; i--)
+    {
+        int currentMaxIndex = 0;
+        T currentMax = *array;
+        
+        for (int j = 1; j <= i; ++j)
+        {
+            if (currentMax < *(array+j))
+            {
+                currentMax =*(array+j);
+                currentMaxIndex = j;
+            }
+        }
+        
+        //swap arr[j] with arr[currentMaxIndex] if necessary
+        if (currentMaxIndex != i)
+        {
+            *(array+currentMaxIndex) = *(array+i);
+            *(array+i) = currentMax;
+        }
+    }
+}
+
+template <typename T>
+void m_Array<T>::bubbleSort()
+{
 }
