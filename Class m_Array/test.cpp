@@ -14,6 +14,8 @@ using namespace std;
 
 int* insertSort(int *arr, int n);
 int* selectSort(int* arr,int n);
+int* bubbleSort(int* arr, int n);
+int* optimalBubbleSort(int* arr, int n);
 void display(int* arr,int n);
 
 int main()
@@ -23,7 +25,7 @@ int main()
    
 //    display(array,5);
 
-    display(selectSort(array, 5),5);
+    display(optimalBubbleSort(array, 5),5);
     
     return 0;
 }
@@ -74,6 +76,42 @@ int* selectSort(int* array, int n)
         {
             *(array+currentMaxIndex) = *(array+i);
             *(array+i) = currentMax;
+        }
+    }
+    return array;
+}
+
+int* bubbleSort(int * array, int n)
+{
+    for (int i = 1; i < n; ++i) {
+        for (int j = 0; j < n - i; ++j) {
+            if (*(array+j) > *(array+(j+1)) ) {
+                //swap *(array+j)  and *(array+(j+1))
+                int temp = *(array+(j+1)) ;
+                *(array+(j+1))  = *(array+j);
+                *(array+j)  = temp ;
+            }
+        }
+    }
+    return array;
+}
+
+int* optimalBubbleSort(int* array, int n)
+{
+    bool NeedCmp = true;
+    for (int i = 1; (i < n)&&(NeedCmp); ++i)
+    {
+        NeedCmp = false;
+        for (int j = 0; j < n - i; ++j)
+        {
+            if (*(array+j) > *(array+(j+1)) )
+            {
+                //swap *(array+j)  and *(array+(j+1))
+                int temp = *(array+(j+1)) ;
+                *(array+(j+1))  = *(array+j);
+                *(array+j)  = temp ;
+                NeedCmp = true;
+            }
         }
     }
     return array;

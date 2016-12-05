@@ -74,4 +74,40 @@ void m_Array<T>::selectSort()
 template <typename T>
 void m_Array<T>::bubbleSort()
 {
+    for (int i = 1; i < lenth; ++i) 
+    {
+        for (int j = 0; j < lenth - i; ++j)//j from 0 to lenth-i !
+        {
+            if (*(array+j) > *(array+(j+1)) )
+            {
+                //swap *(array+j)  and *(array+(j+1))
+                T temp = *(array+(j+1)) ;
+                *(array+(j+1))  = *(array+j);
+                *(array+j)  = temp ;
+            }
+        }
+    }
+}
+
+template <typename T>
+void m_Array<T>::optimalBubbleSort()
+{
+    //Array may be sorted and next pass not needed
+    bool needNextPass = true;
+    for (int i = 1; (i < lenth)&&(needNextPass); ++i)
+    {
+        needNextPass = false;
+        //perform the kth pass
+        for (int j = 0; j < lenth - i; ++j)
+        {
+            if (*(array+j) > *(array+(j+1)) )
+            {
+                //swap *(array+j)  and *(array+(j+1))
+                T temp = *(array+(j+1)) ;
+                *(array+(j+1))  = *(array+j);
+                *(array+j)  = temp ;
+                needNextPass = true;//next pass still needed
+            }
+        }
+    }
 }

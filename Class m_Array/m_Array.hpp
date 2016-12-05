@@ -30,6 +30,7 @@ public:
     void quickSort();
     void mergeSort();
     void bubbleSort();
+    void optimalBubbleSort();
     
 };
 
