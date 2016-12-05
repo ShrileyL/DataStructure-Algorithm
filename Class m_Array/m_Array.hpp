@@ -28,7 +28,7 @@ public:
     void insertSort();
     void selectSort();
     void quickSort();
-    void mergeSort();
+    void friend mergeSort(T* array, int lenth);
     void bubbleSort();
     void optimalBubbleSort();
     

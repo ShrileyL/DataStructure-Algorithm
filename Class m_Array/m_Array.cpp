@@ -111,3 +111,68 @@ void m_Array<T>::optimalBubbleSort()
         }
     }
 }
+
+
+template <typename T>
+void m_merge(T arr1[],int size1,T arr2[], int size2,T* dest)
+{
+    int current1 = 0;//index in arr1
+    int current2 = 0;
+    int current3 = 0;
+    
+    while (current1 <size1 && current2 < size2)
+    {
+        if (*(arr1+current1) < *(arr2 + current2))
+            *(dest + (current3++)) = *(arr1 + (current1++));
+        else
+            *(dest + (current3++)) = *(arr2 + (current2++));
+    }
+    
+    while (current1 < size1)
+    {
+        *(dest + (current3++)) = *(arr1 + (current1++));
+    }
+    
+    while (current2 < size2)
+    {
+        *(dest + (current3++)) = *(arr2 + (current2++));
+    }
+    
+}
+
+template <typename T>
+void arraycopy(T* source, int sourceStartIndex, T* target, int targetStartIndex, int lenth)
+{
+    for (int i = 0; i < lenth; ++i) {
+        *(target+(targetStartIndex + i)) = *(source + (sourceStartIndex + i));
+    }
+}
+
+
+template <typename T>
+void mergeSort(T* array, int lenth)
+{
+    if (lenth > 1)//base case
+    {
+        //merge sort the first half
+        T* firsthalf = new T[lenth/2];//create firsthalf
+
+        arraycopy(array, 0, firsthalf, 0, lenth/2);
+        mergeSort(firsthalf,lenth/2);
+        
+        //merge sort the second half
+        T* secondhalf = new T[lenth-lenth/2];//create secondhalf
+        int secondhalflenth = lenth-lenth/2;
+        arraycopy(array, 0, secondhalf, 0, secondhalflenth);
+        mergeSort(secondhalf,secondhalflenth);
+        
+        //merge firsthalf with secondhalf
+        T* temp = new T[lenth];
+        m_merge(firsthalf, lenth/2, secondhalf, secondhalflenth, temp);
+        arraycopy(temp, 0, array,0, lenth);
+        
+        delete [] temp;
+        delete [] firsthalf;
+        delete [] secondhalf;
+    }
+}

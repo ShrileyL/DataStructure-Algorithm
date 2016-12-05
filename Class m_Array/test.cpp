@@ -16,7 +16,12 @@ int* insertSort(int *arr, int n);
 int* selectSort(int* arr,int n);
 int* bubbleSort(int* arr, int n);
 int* optimalBubbleSort(int* arr, int n);
+int* m_merge(int arr1[],int size1,int arr2[], int size2,int* dest);
+void arraycopy(int* source, int sourceStartIndex, int* target, int targetStartIndex, int lenth);
+
 void display(int* arr,int n);
+
+
 
 int main()
 {
@@ -25,8 +30,20 @@ int main()
    
 //    display(array,5);
 
-    display(optimalBubbleSort(array, 5),5);
+    // display(optimalBubbleSort(array, 5),5);
     
+    int arr1[] = {1,4,66};
+//    int arr2[] = {3,42,12,22,5,0};
+    int arr2[] = {0,3,5,12,22,42};
+    int list[10] ;
+//    m_merge(arr1, 3, arr2, 6, list);
+//    display(list, 9);
+    // arraycopy(arr2, 0, list, 0, 4);
+    // display(list, 4);
+
+    mergeSort(arr2,6);
+    display(arr2, 6);
+
     return 0;
 }
 
@@ -115,4 +132,67 @@ int* optimalBubbleSort(int* array, int n)
         }
     }
     return array;
+}
+
+int* m_merge(int arr1[],int size1,int arr2[], int size2,int* dest)
+{
+    int current1 = 0;//index in arr1
+    int current2 = 0;
+    int current3 = 0;
+    
+    while (current1 <size1 && current2 < size2)
+    {
+        if (*(arr1+current1) < *(arr2 + current2))
+            *(dest + (current3++)) = *(arr1 + (current1++));
+        else
+            *(dest + (current3++)) = *(arr2 + (current2++));
+    }
+    
+    while (current1 < size1)
+    {
+        *(dest + (current3++)) = *(arr1 + (current1++));
+    }
+    
+    while (current2 < size2)
+    {
+        *(dest + (current3++)) = *(arr2 + (current2++));
+    }
+    
+    return dest;
+}
+
+void arraycopy(int* source, int sourceStartIndex, int* target, int targetStartIndex, int lenth)
+{
+    for (int i = 0; i < lenth; ++i) {
+        *(target+(targetStartIndex + i)) = *(source + (sourceStartIndex + i));
+    }
+}
+
+void mergeSort(int* array, int lenth)
+{
+    if (lenth > 1)//base case
+    {
+        //merge sort the first half
+        int* firsthalf = new int[lenth/2];//create firsthalf
+        
+        arraycopy(array, 0, firsthalf, 0, lenth/2);
+        mergeSort(firsthalf,lenth/2);
+        
+        //merge sort the second half
+        int* secondhalf = new int[lenth-(lenth/2)];//create secondhalf
+        int secondhalflenth = lenth-(lenth/2);
+        arraycopy(array, 0, secondhalf, 0, secondhalflenth);
+        mergeSort(secondhalf,secondhalflenth);
+        
+        //merge firsthalf with secondhalf
+        int* temp = new int[lenth];
+        m_merge(firsthalf, lenth/2, secondhalf, secondhalflenth, temp);
+        arraycopy(temp, 0, array,0, lenth);
+        
+        delete [] temp;
+        delete [] firsthalf;
+        delete [] secondhalf;
+    }
+    
+
 }
