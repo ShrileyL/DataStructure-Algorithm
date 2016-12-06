@@ -19,6 +19,8 @@ int* optimalBubbleSort(int* arr, int n);
 int* m_merge(int arr1[],int size1,int arr2[], int size2,int* dest);
 void arraycopy(int* source, int sourceStartIndex, int* target, int targetStartIndex, int lenth);
 
+void quickSort(int* arr,int left, int right);
+
 void display(int* arr,int n);
 
 
@@ -41,7 +43,7 @@ int main()
     // arraycopy(arr2, 0, list, 0, 4);
     // display(list, 4);
 
-    mergeSort(arr2,6);
+    quickSort(arr2,0,5);
     display(arr2, 6);
 
     return 0;
@@ -173,14 +175,15 @@ void mergeSort(int* array, int lenth)
     if (lenth > 1)//base case
     {
         //merge sort the first half
-        int* firsthalf = new int[lenth/2];//create firsthalf
+        int firstlenth = lenth/2;
+        int* firsthalf = new int[firstlenth];//create firsthalf
         
         arraycopy(array, 0, firsthalf, 0, lenth/2);
-        mergeSort(firsthalf,lenth/2);
+        mergeSort(firsthalf,firstlenth);
         
         //merge sort the second half
-        int* secondhalf = new int[lenth-(lenth/2)];//create secondhalf
         int secondhalflenth = lenth-(lenth/2);
+        int* secondhalf = new int[secondhalflenth];//create secondhalf
         arraycopy(array, 0, secondhalf, 0, secondhalflenth);
         mergeSort(secondhalf,secondhalflenth);
         
@@ -195,4 +198,32 @@ void mergeSort(int* array, int lenth)
     }
     
 
+}
+
+void quickSort(int* arr,int left, int right)
+{
+    int i = left, j = right;
+    int tmp;
+    int pivot = arr[(left + right) / 2];
+    
+    /* partition */
+    while (i <= j) {
+        while (arr[i] < pivot)
+            i++;
+        while (arr[j] > pivot)
+            j--;
+        if (i <= j) {
+            tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+            i++;
+            j--;
+        }
+    };
+    
+    /* recursion */
+    if (left < j)
+        quickSort(arr, left, j);
+    if (i < right)
+        quickSort(arr, i, right);
 }

@@ -154,15 +154,17 @@ void mergeSort(T* array, int lenth)
 {
     if (lenth > 1)//base case
     {
+        int firstlenth = lenth/2;
         //merge sort the first half
-        T* firsthalf = new T[lenth/2];//create firsthalf
+        T* firsthalf = new T[firstlenth];//create firsthalf
 
-        arraycopy(array, 0, firsthalf, 0, lenth/2);
+        arraycopy(array, 0, firsthalf, 0, firstlenth);
         mergeSort(firsthalf,lenth/2);
         
         //merge sort the second half
-        T* secondhalf = new T[lenth-lenth/2];//create secondhalf
         int secondhalflenth = lenth-lenth/2;
+        T* secondhalf = new T[secondhalflenth];//create secondhalf
+        
         arraycopy(array, 0, secondhalf, 0, secondhalflenth);
         mergeSort(secondhalf,secondhalflenth);
         
@@ -175,4 +177,33 @@ void mergeSort(T* array, int lenth)
         delete [] firsthalf;
         delete [] secondhalf;
     }
+}
+
+template <typename T>
+void m_Array<T>::quickSort(int left, int right)
+{
+    int i = left, j = right;
+    int tmp;
+    int pivot = array[(left + right) / 2];
+    
+    /* partition */
+    while (i <= j) {
+        while (array[i] < pivot)
+            i++;
+        while (array[j] > pivot)
+            j--;
+        if (i <= j) {
+            tmp = array[i];
+            array[i] = array[j];
+            array[j] = tmp;
+            i++;
+            j--;
+        }
+    };
+    
+    /* recursion */
+    if (left < j)
+        quickSort(array, left, j);
+    if (i < right)
+        quickSort(array, i, right);
 }
