@@ -10,6 +10,10 @@
 #define DataStructureBasic_hpp
 
 #include <stdio.h>
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
 
 //Node
 template<typename T>
@@ -18,7 +22,7 @@ class Node
     T element;//Element contained in the node
     Node* next;//pointer to next Node
 public:
-    Node():next(nullptr){};
+    Node():next(NULL){};
     Node(T element);
 };
 
@@ -35,20 +39,21 @@ public:
     void addLast(T element);
     T getFirst();
     T getLast();
-    T removeFirst();
-    T removeLast();
+    T removeFirst() throw(runtime_error);
+    T removeLast() throw(runtime_error);
     void add(T element);
     void add(int index,T element);
     void clear();
-    bool contains(T element);
+//    bool contains(T element);
     T get(int index);
     int indexOf(T element);
     bool isEmpty();
-    int lastIndexOf(T element);
+//    int lastIndexOf(T element);
     void remove(T element);
     int getSize();
     T removeAt(int index);
-    T set(int index,T element);
+//    T set(int index,T element);
 };
+
 
 #endif /* DataStructureBasic_hpp */
