@@ -26,6 +26,11 @@ public:
     Node(T element);
 };
 
+template class Node <std::string>;
+template class Node <int>;
+template class Node <float>;
+template class Node <char*>;
+
 //LinkedList
 template<typename T>
 class LinkedList
@@ -55,5 +60,10 @@ public:
 //    T set(int index,T element);
 };
 
+//add lines explicitly instantiating all the relevant templates
+template class LinkedList<std::string>;
+template class LinkedList<int>;
+template class LinkedList<float>;
+template class LinkedList<char*>;
 
 #endif /* DataStructureBasic_hpp */
