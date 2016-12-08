@@ -10,9 +10,9 @@
 #include <stdexcept>
 
 template<typename T>
-Node<T>::Node(T n)
+Node<T>::Node(T element)
 {
-    this->element = n;
+    this->element = element;
     next = NULL;
 }
 
@@ -68,7 +68,7 @@ int LinkedList<T>::getSize()
 template<typename T>
 void LinkedList<T>::addFirst(T element)
 {
-    Node<T> newNode = new Node<T>(element);//creat new Node
+    Node<T> *newNode = new Node<T>(element);//creat new Node
     
     newNode->next = head;
     head = newNode;
@@ -81,7 +81,7 @@ void LinkedList<T>::addFirst(T element)
 template<typename T>
 void LinkedList<T>::addLast(T element)
 {
-    Node<T> newNode=new Node<T>(element);
+    Node<T> *newNode=new Node<T>(element);
     
     if (tail == NULL)
     {
@@ -99,21 +99,7 @@ void LinkedList<T>::addLast(T element)
 
 template<typename T>
 void LinkedList<T>::add(T element)
-{
-//    Node<T> newNode=new Node<T>(element);
-//    
-//    if (tail == NULL)
-//    {
-//        head = tail = newNode;
-//    }
-//    else
-//    {
-//        tail->next = newNode;
-//        tail = tail->next;
-//    }
-//    
-//    ++size;
-    
+{    
     addLast(element);
 }
 
@@ -127,12 +113,13 @@ void LinkedList<T>::add(int index, T element)
     else
     {
         Node<T>* p = head;
-        Node<T> newNode=new Node<T>(element);
+        Node<T>* newNode=new Node<T>(element);
         for (int i = 1; i < index; ++i)
             p = p->next;//p pointer to one ahead the position to be insert
         
-        newNode->next = p-> next->next;
+        Node<T>* temp = p->next;
         p->next = newNode;
+        newNode->next = temp;
         
         ++size;
     }
@@ -224,9 +211,9 @@ template<typename T>
 T LinkedList<T>::removeAt(int index)
 {
     if(index == 0)
-        removeFirst();
+        return removeFirst();
     else if(index == size-1)
-        removeLast();
+        return removeLast();
     else
     {
         Node<T>* previous = head;
