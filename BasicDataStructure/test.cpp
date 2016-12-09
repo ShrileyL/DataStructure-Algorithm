@@ -6,37 +6,38 @@
 //  Copyright © 2016年 KevinLiu. All rights reserved.
 //
 
-
+//test for linkedlist
 #include <iostream>
 
 #include <string>
 #include "DataStructureBasic.hpp"
 using namespace std;
 
-void printList(LinkedList<string> list)
-{
-    for (int i = 0; i < list.getSize(); ++i) {
-        cout << list.get(i) << " ";
-    }
-    cout << endl;
-}
 
 int main()
 {
+        
+    Node<string> node("hello");
+//    LinkList<string> list;
+//    list.addLast("America");
+//    list.print(cout);
+
+
     LinkedList<string> list;
-    
     //add element to the list
     list.add("America");
     cout << "(1)";
-    printList(list);
+    list.print();
     
     list.add(0, "Canada");//add to the begining of the list
+//    cout << list.getSize();
     cout << "(2)";
-    printList(list);
+    list.print();
+//    printList(list);
     
     list.add("Russia");//add to the end of the list
     cout << "(3)";
-    printList(list);
+    list.print();
     
     list.add("France");//add to the end of the list
     cout << "(4)";
@@ -66,6 +67,48 @@ int main()
     list.removeAt(list.getSize() - 1);//remove the last element
     cout << "(10)";
     printList(list);
+    
+    return 0;
+}
+
+
+// test for stack and queue
+#include <iostream>
+#include <string>
+#include "DataStructureBasic.hpp"
+#include "StackWIthLinkedList.hpp"
+
+
+using namespace std;
+
+
+int main()
+{
+//    Stack<int> stack;
+//    stack.push(1);
+//    stack.push(6);
+//    stack.push(44);
+//    stack.push(2);
+//    stack.push(9);
+//    cout << stack.pop() << endl;
+//    
+//    stack.print();
+    
+    Queue<string> que;
+    que.print();
+
+    que.enqueue("America");
+    que.enqueue("Japan");
+    que.enqueue("Korea");
+    que.enqueue("Singapore");
+    que.enqueue("Germany");
+    que.print();
+
+    cout << que.dequeue() << endl;
+    
+    que.print();
+    
+
     
     return 0;
 }

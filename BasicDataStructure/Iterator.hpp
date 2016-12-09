@@ -1,46 +1,39 @@
 //
-//  DataStructureBasic.hpp
+//  Iterator.hpp
 //  test
 //
-//  Created by KevinLiu on 16/12/6.
+//  Created by KevinLiu on 16/12/9.
 //  Copyright © 2016年 KevinLiu. All rights reserved.
 //
 
-#ifndef DataStructureBasic_hpp
-#define DataStructureBasic_hpp
+#ifndef Iterator_hpp
+#define Iterator_hpp
 
 #include <stdio.h>
-#include <iostream>
 #include <stdexcept>
-
+#include "DataStructureBasic.hpp"
 using namespace std;
 
-//declaration
-
-//Node
-template<typename T>
-class Node
-{
+template <typename T>
+class Iterator {
+    Node<T>* current;
+    
 public:
-    T element;//Element contained in the node
-    //need to be "Node<T>" instead of "Node"
-    Node<T>* next;//pointer to next Node
-
-    Node();
-    Node(const T& ele);
-
+    Iterator(const Node<T>* p);
+    Iterator &operator++();
+    T operator*();
+    bool operator==(const Iterator<T>& itr);
+    bool operator!=(const Iterator<T>& itr);
 };
 
-
-//LinkedList
-template<typename T>
-class LinkedList
+template <typename T>
+class NewLinkedList
 {
     Node<T>* head;
     Node<T>* tail;
     int size;
 public:
-    LinkedList();
+    NewLinkedList();
     void print();
     void addFirst(const T element);
     void addLast(const T element);
@@ -51,40 +44,67 @@ public:
     void add(const T element);
     void add(const int index,const T element);
     void clear();
-//    bool contains(T element);
+    //    bool contains(T element);
     const T get(const int index);
     int indexOf(const T element);
     bool isEmpty();
-//    int lastIndexOf(T element);
+    //    int lastIndexOf(T element);
     void remove(const T element);
     const int getSize();
     T removeAt(const int index);
-//    T set(int index,T element);
+    
+    Iterator<T> begin()
+    {
+        Iterator<T> p = Iterator<T>(head);
+        return p;
+    }
+    
+    Iterator<T> end()
+    {
+        Iterator<T> p = Iterator<T>(tail->next);
+        return p;
+    }
 };
 
-//Implemenet
-
 template<typename T>
-Node<T>::Node():next(NULL)
+Iterator<T>::Iterator(const Node<T>* p):current(p)
 {
 }
 
 template<typename T>
-Node<T>::Node(const T& ele)
+Iterator<T>& Iterator<T>::operator++()
 {
-    this->element = ele;
-    next = NULL;
+    current = current->next;
+    return *this;
 }
 
 template<typename T>
-LinkedList<T>::LinkedList()
+T Iterator<T>::operator*()
+{
+    return current->element;
+}
+
+template<typename T>
+bool Iterator<T>::operator==(const Iterator<T> &itr)
+{
+    return current == itr.current;
+}
+
+template<typename T>
+bool Iterator<T>::operator!=(const Iterator<T> &itr)
+{
+    return current != itr.current;
+}
+
+template<typename T>
+NewLinkedList<T>::NewLinkedList()
 {
     head = tail = NULL;
     size = 0;
 }
 
 template<typename T>
-void LinkedList<T>::print()
+void NewLinkedList<T>::print()
 {
     if (getSize() == 0)
     {
@@ -101,7 +121,7 @@ void LinkedList<T>::print()
 }
 
 template<typename T>
-bool LinkedList<T>::isEmpty()
+bool NewLinkedList<T>::isEmpty()
 {
     //    if (head == NULL)
     //        return true;
@@ -112,7 +132,7 @@ bool LinkedList<T>::isEmpty()
 }
 
 template<typename T>
-void LinkedList<T>::clear()
+void NewLinkedList<T>::clear()
 {
     while (head!=NULL) {
         Node<T>* temp = head;
@@ -124,7 +144,7 @@ void LinkedList<T>::clear()
 }
 
 template<typename T>
-int LinkedList<T>::indexOf(const T element)
+int NewLinkedList<T>::indexOf(const T element)
 {
     Node<T> *current = head;
     for (int i = 0; i <size; ++i) {
@@ -137,13 +157,13 @@ int LinkedList<T>::indexOf(const T element)
 }
 
 template<typename T>
-const int LinkedList<T>::getSize()
+const int NewLinkedList<T>::getSize()
 {
     return size;
 }
 
 template<typename T>
-void LinkedList<T>::addFirst(const T element)
+void NewLinkedList<T>::addFirst(const T element)
 {
     Node<T> *newNode = new Node<T>(element);//creat new Node
     
@@ -156,7 +176,7 @@ void LinkedList<T>::addFirst(const T element)
 }
 
 template<typename T>
-void LinkedList<T>::addLast(const T element)
+void NewLinkedList<T>::addLast(const T element)
 {
     Node<T> *newNode=new Node<T>(element);
     
@@ -175,13 +195,13 @@ void LinkedList<T>::addLast(const T element)
 
 
 template<typename T>
-void LinkedList<T>::add(const T element)
+void NewLinkedList<T>::add(const T element)
 {
     addLast(element);
 }
 
 template<typename T>
-void LinkedList<T>::add(const int index, const T element)
+void NewLinkedList<T>::add(const int index, const T element)
 {
     if (index == 0)
         addFirst(element);
@@ -203,7 +223,7 @@ void LinkedList<T>::add(const int index, const T element)
 }
 
 template<typename T>
-const T LinkedList<T>::getFirst()
+const T NewLinkedList<T>::getFirst()
 {
     if(size == 0)
         throw runtime_error("Index out of range");
@@ -212,7 +232,7 @@ const T LinkedList<T>::getFirst()
 }
 
 template<typename T>
-const T LinkedList<T>::getLast()
+const T NewLinkedList<T>::getLast()
 {
     if(size == 0)
         throw runtime_error("Index out of range");
@@ -221,7 +241,7 @@ const T LinkedList<T>::getLast()
 }
 
 template<typename T>
-const T LinkedList<T>::get(const int index)
+const T NewLinkedList<T>::get(const int index)
 {
     if(index < 0 || index > size-1)
         throw runtime_error("Index out of range");
@@ -234,7 +254,7 @@ const T LinkedList<T>::get(const int index)
 }
 
 template<typename T>
-T LinkedList<T>::removeFirst() throw(runtime_error)//throw exception
+T NewLinkedList<T>::removeFirst() throw(runtime_error)//throw exception
 {
     if(size==0)
         throw runtime_error("No elements in the list");
@@ -254,7 +274,7 @@ T LinkedList<T>::removeFirst() throw(runtime_error)//throw exception
 }
 
 template<typename T>
-T LinkedList<T>::removeLast() throw(runtime_error)
+T NewLinkedList<T>::removeLast() throw(runtime_error)
 {
     if(size==0)
         throw runtime_error("No elements in the list");
@@ -285,7 +305,7 @@ T LinkedList<T>::removeLast() throw(runtime_error)
 }
 
 template<typename T>
-T LinkedList<T>::removeAt(const int index)
+T NewLinkedList<T>::removeAt(const int index)
 {
     if(index == 0)
         return removeFirst();
@@ -308,4 +328,5 @@ T LinkedList<T>::removeAt(const int index)
     }
 }
 
-#endif /* DataStructureBasic_hpp */
+
+#endif /* Iterator_hpp */
