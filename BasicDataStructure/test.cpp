@@ -112,3 +112,32 @@ int main()
     
     return 0;
 }
+
+
+//test for iterator and new linkedlist
+#include <iostream>
+#include <string>
+#include "Iterator.hpp"
+
+
+using namespace std;
+
+
+int main()
+{
+    LinkedList<string> list;
+    list.add("America");
+    list.add("Canada");
+    list.add("Russia");
+    list.add("France");
+
+    for (Iterator<string> itr = list.begin(); itr != list.end(); ++itr)
+    {
+        cout << *itr << " ";
+    }
+
+    cout<<endl;
+
+    
+    return 0;
+}
