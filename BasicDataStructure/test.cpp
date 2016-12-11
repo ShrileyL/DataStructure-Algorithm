@@ -10,7 +10,8 @@
 #include <iostream>
 
 #include <string>
-#include "DataStructureBasic.hpp"
+// inclede Def.hpp file
+#include "DataStructureBasicDef.hpp"
 using namespace std;
 
 
@@ -41,32 +42,32 @@ int main()
     
     list.add("France");//add to the end of the list
     cout << "(4)";
-    printList(list);
+    list.print();
     
     list.add(2, "Germany");
     cout << "(5)";
-    printList(list);
+    list.print();
     
     list.add(5, "Norway");
     cout << "(6)";
-    printList(list);
+    list.print();
     
     list.add(0, "Netherlands");
     cout << "(7)";
-    printList(list);
+    list.print();
     
     //remove element from the list
     list.removeAt(0);
     cout << "(8)";
-    printList(list);
+    list.print();
     
     list.removeAt(2);
     cout << "(9)";
-    printList(list);
+    list.print();
     
     list.removeAt(list.getSize() - 1);//remove the last element
     cout << "(10)";
-    printList(list);
+    list.print();
     
     return 0;
 }
