@@ -142,3 +142,20 @@ int main()
     
     return 0;
 }
+
+
+//test for binarytree
+#include <iostream>
+#include <string>
+#include "BinaryTree.hpp"
+using namespace std;
+
+int main()
+{
+//    TreeNode<int> a=1;
+    TreeNode<int> arraynode[] = {24,3,2,5,2};
+    BinaryTree<int> bt;
+    cout << bt.getsize();
+    
+    return 0;
+}
