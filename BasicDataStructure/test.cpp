@@ -153,9 +153,22 @@ using namespace std;
 int main()
 {
 //    TreeNode<int> a=1;
-    TreeNode<int> arraynode[] = {24,3,2,5,2};
-    BinaryTree<int> bt;
-    cout << bt.getsize();
+//    int arraynode[] = {24,3,2,5,9};
+//    BinaryTree<int> bt=BinaryTree<int>(arraynode,5);
+    
+//    cout << bt.getsize()<<endl;
+    
+//    int a[] = {2, 12,9,3,66};
+//    BinaryTree<int> bi;
+//    for (int i = 0; i < 5; ++i) {
+//        bi.insert(a[i]);
+//    }
+
+    
+    int a = 9;
+    BinaryTree<int> bi;
+    bi.insert(a);
+    bi.inorder();
     
     return 0;
 }

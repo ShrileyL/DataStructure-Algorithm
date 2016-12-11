@@ -1,4 +1,4 @@
-//
+ //
 //  BinaryTree.hpp
 //  test
 //
@@ -35,31 +35,47 @@ public:
 
 template <typename T>
 class BinaryTree {
-    TreeNode<T> root;
+    TreeNode<T> *root;
     int size;
-    
+    void inorder(TreeNode<T> *root);
+    void preorder(TreeNode<T> *root);
+    void postorder(TreeNode<T> *root);
 public:
     BinaryTree();
-    BinaryTree(T *arr, int arraysize);
+    BinaryTree(T arr[], int arraysize);
     bool insert(const T element);
 //    void print();
-    void inorder();// print
+    void inorder();
     void preorder();
     void postorder();
+
     int getsize() const;
+    void getroot() 
+    {
+        TreeNode<T> *p = root;
+        for (int i = 0; i < size; ++i) {
+            cout << p->element << endl;
+            if(p->left != NULL)
+            p = p -> left;
+            else if(p->right != NULL)
+                p = p -> right;
+            else
+                cout << " wrong" << endl;
+        }
+    }
 };
 
 template <typename T>
 BinaryTree<T>::BinaryTree():root(NULL),size(0){};
 
 template <typename T>
-BinaryTree<T>::BinaryTree(T *arr, int arraysize)
+BinaryTree<T>::BinaryTree(T arr[], int arraysize)
 {
-    size = arraysize;
-    root.element = *arr;
+    size = 0;
+    root = NULL;
     for (int i = 0; i < arraysize; ++i)
     {
-        insert(*(arr+i));
+        insert(arr[i]);
     }
 }
 
@@ -72,31 +88,57 @@ int BinaryTree<T>::getsize() const
 template <typename T>
 bool BinaryTree<T>::insert(const T ele)
 {
-    if (size == 0)
-    {
-        root.element = ele;
-        root.left = NULL;
-        root.right = NULL;
-        ++size;
-        return true;
-    }
+    //if binary tree is empty
+    //create a root node for the new element
+    if (root == NULL)
+        root = new TreeNode<T>(ele);
     else
     {
-        TreeNode<T> *p = &root;
+        //locate the parent node
+        TreeNode<T> *current = root;
+        TreeNode<T> *parent = NULL;
         
         //find the position to be insert
-        while (p != NULL)
+        while (current != NULL)
         {
-            if (ele <= p->element )
-                p = p->left;
+            if (ele <= current->element )
+            {
+                parent = current;
+                current = current->left;
+            }
+            else if(ele > current->element)
+            {
+                parent = current;
+                current = current->right;
+            }
             else
-                p = p->right;
+                return false;
         }
-        
-        p = new TreeNode<T>(ele);//create and insert the node
-        
-        return true;
+        //create the new node and attach it to the parent
+        if (ele < parent->element)
+            parent->left = new TreeNode<T>(ele);
+        else
+            parent->right = new TreeNode<T>(ele);
     }
+    ++size;
+    return true;
+}
+
+template <typename T>
+void BinaryTree<T>::inorder()
+{
+    insert(root);
+}
+
+template <typename T>
+void BinaryTree<T>::inorder(TreeNode<T> *root)
+{
+    if(root == NULL)
+    return;
+    
+    inorder(root->left);
+    cout << root->element << " ";
+    inorder(root->right);
 }
 
 #endif /* Node2_hpp */
