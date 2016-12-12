@@ -165,10 +165,37 @@ int main()
 //    }
 
     
-    int a = 9;
-    BinaryTree<int> bi;
-    bi.insert(a);
+    // int a = 9;
+    // BinaryTree<int> bi;
+    // bi.insert(a);
+    // bi.inorder();
+
+    int arraynode[] = {101,55,107,100,67,45,59,60};
+    BinaryTree<int> bi=BinaryTree<int>(arraynode,8);
+    cout << bi.getsize()<<endl;
     bi.inorder();
+    cout << endl;
+    bi.postorder();
+    cout << endl;
+    bi.preorder();
+    cout << endl;
     
+    return 0;
+}
+
+//test for BinaryTreeSearchIterative
+#include <iostream>
+#include <string>
+#include "BinaryTreeSearchIterative.hpp"
+#include <stack>
+using namespace std;
+
+int main()
+{
+    int arraynode[] = {101,55,107,100,67,45,59,60};
+    BinaryTree<int> bi=BinaryTree<int>(arraynode,8);
+    cout << bi.getsize()<<endl;
+    bi.inorder();
+
     return 0;
 }
