@@ -247,4 +247,36 @@ void BinaryTree<T>::postorder()
     prev = curr;  // record previously traversed node
   }
 }
+
+//more effecient post-order traversal
+template <typename T>
+void BinaryTree<T>::postorder()
+{
+        if (!root) return;
+    stack<TreeNode<T>*> s;
+    s.push(root);
+    TreeNode<T>* prev = NULL;
+    while (!s.empty())
+    {
+        TreeNode<T>* curr = s.top();
+        if (!prev || prev->left == curr || prev->right == curr)
+        {
+            if (curr->left)
+                s.push(curr->left);
+            else if (curr->right)
+                s.push(curr->right);
+        }
+        else if (curr->left == prev)
+        {
+            if (curr->right)
+                s.push(curr->right);
+        }
+        else
+        {
+            cout << curr->element << " ";
+            s.pop();
+        }
+        prev = curr;
+    }
+}
 #endif /* BinaryTreeSearchIterative_hpp */
