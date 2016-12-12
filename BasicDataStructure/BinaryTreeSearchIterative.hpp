@@ -16,8 +16,7 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <stack>
-//#include "StackWIthLinkedList.hpp"
+#include <stack>//include stack
 
 using namespace std;
 
@@ -119,17 +118,42 @@ bool BinaryTree<T>::insert(const T ele)
     return true;
 }
 
+// iterative solution using stack
 template <typename T>
 void BinaryTree<T>::inorder()
 {
+//    stack<TreeNode<T>*> s;
+//    if(root == NULL)
+//        return;
+//    
+//    TreeNode<T> *current = root;
+//    bool done = false;
+//    
+//    while (!done)
+//    {
+//        if(current)
+//        {
+//            s.push(current);
+//            current = current->left;
+//        }
+//        else
+//        {
+//            if(s.empty())
+//                done = true;
+//            else
+//            {
+//                current = s.top();
+//                s.pop();
+//                cout << current->element << " ";
+//                current = current->right;
+//            }
+//        }
+//    }
+    
     stack<TreeNode<T>*> s;
-    if(root == NULL)
-        return;
-    
     TreeNode<T> *current = root;
-    bool done = false;
     
-    while (!done)
+    while (!s.empty()||current)
     {
         if(current)
         {
@@ -138,31 +162,89 @@ void BinaryTree<T>::inorder()
         }
         else
         {
-            if(s.empty())
-                done = true;
-            else
-            {
                 current = s.top();
                 s.pop();
                 cout << current->element << " ";
                 current = current->right;
-            }
         }
     }
 }
 
 
 template <typename T>
-void BinaryTree<T>::preorder()//deep-first traversal
+void BinaryTree<T>::preorder()
 {
-   
+        // Base Case
+    if (root == NULL)
+       return;
+
+    // Create an empty stack and push root to it
+    stack<TreeNode<T>*> s;
+    TreeNode<T> *current = root;
+    s.push(root);
+
+    /* Pop all items one by one. Do following for every popped item
+       a) print it
+       b) push its right child
+       c) push its left child
+    Note that right child is pushed first so that left is processed first */
+    while (!s.empty())
+    {
+        // Pop the top item from stack and print it
+        current = s.top();
+        s.pop();
+        cout << current->element << " ";
+        // Push right and left children of the popped node to stack
+        if(current->right)
+            s.push(current->right);
+        if(current->left)
+            s.push(current->left);
+    }
 }
 
 template <typename T>
 void BinaryTree<T>::postorder()
 {
-    
+    stack<TreeNode<T>*> s;
+    s.push(root);
+    TreeNode<T> *curr= s.top();
+    TreeNode<T> *prev = NULL;
+
+    while (!s.empty()) 
+   {
+        TreeNode<T>* curr = s.top();
+    // we are traversing down the tree
+        if (!prev || prev->left == curr || prev->right == curr) 
+        {
+            if (curr->left) 
+                s.push(curr->left);
+            else if (curr->right) 
+                s.push(curr->right);
+            else 
+            {
+                cout << curr->element << " ";
+                s.pop();
+            }
+        } 
+    // we are traversing up the tree from the left
+        else if (curr->left == prev) 
+        {
+            if (curr->right) 
+                s.push(curr->right);
+            else 
+            {
+                cout << curr->element << " ";
+                s.pop();
+            }
+        }
+    // we are traversing up the tree from the right
+        else if (curr->right == prev) 
+        {
+            cout << curr->element << " ";
+            s.pop();
+        }
+
+    prev = curr;  // record previously traversed node
+  }
 }
-
-
 #endif /* BinaryTreeSearchIterative_hpp */
