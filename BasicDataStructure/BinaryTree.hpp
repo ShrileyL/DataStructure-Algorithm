@@ -127,7 +127,7 @@ bool BinaryTree<T>::insert(const T ele)
 template <typename T>
 void BinaryTree<T>::inorder()
 {
-    insert(root);
+    inorder(root);
 }
 
 template <typename T>
@@ -139,6 +139,40 @@ void BinaryTree<T>::inorder(TreeNode<T> *root)
     inorder(root->left);
     cout << root->element << " ";
     inorder(root->right);
+}
+
+template <typename T>
+void BinaryTree<T>::preorder()//deep-first traversal
+{
+    preorder(root);
+}
+
+template <typename T>
+void BinaryTree<T>::preorder(TreeNode<T> *root)
+{
+    if(root == NULL)
+        return;
+    
+    cout << root->element << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+template <typename T>
+void BinaryTree<T>::postorder()
+{
+    postorder(root);
+}
+
+template <typename T>
+void BinaryTree<T>::postorder(TreeNode<T> *root)
+{
+    if(root == NULL)
+        return;
+    
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->element << " ";
 }
 
 #endif /* Node2_hpp */
