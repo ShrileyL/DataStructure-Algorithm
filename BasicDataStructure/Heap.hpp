@@ -29,6 +29,19 @@ public:
     
 };
 
+// use Heap to construct the priority queue
+template <typename T>
+class PriorityQueue
+{
+    Heap<T> heap;
+    
+public:
+    PriorityQueue();
+    void enqueue(T element);
+    T dequeue();
+    int getsize();
+};
+
 template <typename T>
 Heap<T>::Heap()
 {
@@ -118,6 +131,27 @@ template<typename T>
 int Heap<T>::getsize()
 {
     return v.size();
+}
+
+template<typename T>
+PriorityQueue<T>::PriorityQueue(){};
+
+template <typename T>
+void PriorityQueue<T>::enqueue(T element)
+{
+    heap.add(element);
+}
+
+template<typename T>
+T PriorityQueue<T>::dequeue()
+{
+    return heap.remove();
+}
+
+template<typename T>
+int PriorityQueue<T>::getsize()
+{
+    return heap.getsize();
 }
 
 #endif /* Heap_hpp */
