@@ -122,33 +122,33 @@ bool BinaryTree<T>::insert(const T ele)
 template <typename T>
 void BinaryTree<T>::inorder()
 {
-//    stack<TreeNode<T>*> s;
-//    if(root == NULL)
-//        return;
-//    
-//    TreeNode<T> *current = root;
-//    bool done = false;
-//    
-//    while (!done)
-//    {
-//        if(current)
-//        {
-//            s.push(current);
-//            current = current->left;
-//        }
-//        else
-//        {
-//            if(s.empty())
-//                done = true;
-//            else
-//            {
-//                current = s.top();
-//                s.pop();
-//                cout << current->element << " ";
-//                current = current->right;
-//            }
-//        }
-//    }
+   // stack<TreeNode<T>*> s;
+   // if(root == NULL)
+   //     return;
+   
+   // TreeNode<T> *current = root;
+   // bool done = false;
+   
+   // while (!done)
+   // {
+   //     if(current)
+   //     {
+   //         s.push(current);
+   //         current = current->left;
+   //     }
+   //     else
+   //     {
+   //         if(s.empty())
+   //             done = true;
+   //         else
+   //         {
+   //             current = s.top();
+   //             s.pop();
+   //             cout << current->element << " ";
+   //             current = current->right;
+   //         }
+   //     }
+   // }
     
     stack<TreeNode<T>*> s;
     TreeNode<T> *current = root;
@@ -214,6 +214,7 @@ void BinaryTree<T>::postorder()
    {
         TreeNode<T>* curr = s.top();
     // we are traversing down the tree
+    // prev == null is the situation for the root node
         if (!prev || prev->left == curr || prev->right == curr) 
         {
             if (curr->left) 
@@ -227,6 +228,11 @@ void BinaryTree<T>::postorder()
             }
         } 
     // we are traversing up the tree from the left
+
+    // go up the tree from left node    
+    // need to check if there is a right child
+    // if yes, push it to stack
+    // otherwise, process parent and pop stack
         else if (curr->left == prev) 
         {
             if (curr->right) 
@@ -238,6 +244,9 @@ void BinaryTree<T>::postorder()
             }
         }
     // we are traversing up the tree from the right
+
+    // go up the tree from right node 
+    // after coming back from right node, process parent node and pop stack.
         else if (curr->right == prev) 
         {
             cout << curr->element << " ";
@@ -252,7 +261,7 @@ void BinaryTree<T>::postorder()
 template <typename T>
 void BinaryTree<T>::postorder()
 {
-        if (!root) return;
+    if (!root) return;
     stack<TreeNode<T>*> s;
     s.push(root);
     TreeNode<T>* prev = NULL;
@@ -271,12 +280,44 @@ void BinaryTree<T>::postorder()
             if (curr->right)
                 s.push(curr->right);
         }
+        // Don’t worry about in an iteration where its value won’t get printed, as it is guaranteed to enter the else section in the next iteration.
+        // in next iteration, there may "prev == curr"
+        // this will include in "else"
         else
         {
             cout << curr->element << " ";
             s.pop();
         }
         prev = curr;
+    }
+}
+
+//Alternative solution for post-order traversal
+//using two stack
+template <typename T>
+void BinaryTree<T>::postorder()
+{
+    if (!root) return;
+    stack<TreeNode<T>*> s;
+    stack<TreeNode<T>*> output;
+    s.push(root);
+    TreeNode<T>* curr = root;
+
+    while (!s.empty())
+    {
+        curr = s.top();
+        output.push(curr);
+        s.pop();
+        if (curr->left)
+            s.push(curr->left);
+                if (curr->right)
+            s.push(curr->right);
+    }
+
+    while(!output.empty())
+    {
+        cout << output.top()->element << " ";
+        output.pop();
     }
 }
 #endif /* BinaryTreeSearchIterative_hpp */
