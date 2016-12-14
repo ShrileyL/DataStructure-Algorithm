@@ -1,6 +1,6 @@
 //
 //  DataStructureBaseDef.cpp
-//  test
+//  use togrther with DataStructureBasic1
 //
 //  Created by KevinLiu on 16/12/11.
 //  Copyright © 2016年 KevinLiu. All rights reserved.
