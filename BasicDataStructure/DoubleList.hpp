@@ -77,4 +77,72 @@ private:
     
     void init();
 };
+
+
+//class const_iterator
+template <typename T>
+class const_iterator
+{
+    
+public:
+    const_iterator():current(NULL){}
+    
+    const T & operator* () const
+    {
+        return retrieve();
+    }
+    //++a prefix
+    const_iterator operator++()
+    {
+        current = current->next;
+        return *this;
+    }
+    
+    //a++
+    const_iterator operator++(int)
+    {
+        const_iterator old = *this;
+        ++(*this);
+        return old;
+    }
+    
+    bool operator== (const const_iterator &rhs) const
+    {
+        return current==rhs.current;
+    }
+    
+    bool operator!= (const const_iterator& rhs) const
+    {
+        return !(*this == rhs);
+    }
+    
+protected:
+    DNode<T> *current;
+    
+    T& retrieve() const
+    {
+        return current->data;
+    }
+    
+    const_iterator(DNode<T> *p):current(p){};
+    
+    friend class List<T>;
+};
+
+
+template <typename T>
+class iterator: public const_iterator<T>
+{
+protected:
+    iterator(DNode<T> *p):const_iterator<T>(p){}
+    friend class List<T>;
+    
+public:
+    iterator(){}
+    
+    T & operator*()
+    {
+        return retrieve();
+    }
+};
 #endif /* DoubleList_hpp */
