@@ -42,7 +42,7 @@
 // void task1(LogFile& log)
 // {
 //     
-//     for (int i=0; i>-100; i--) {
+//     for (int i=0; i>-10; i--) {
 //         log.shared_print("task1 says: ",i);
 //     }
 //   
@@ -53,7 +53,7 @@
 //     LogFile log;
 //     thread t1(task1,std::ref(log));
 //     
-//     for (int i=0; i < 100; i++) {
+//     for (int i=0; i < 10; i++) {
 //         log.shared_print("main says: ",i);
 //     }
 //
@@ -160,37 +160,104 @@
 //    return 0;
 //}
 
-#include <iostream>
-#include <thread>
-class ThreadRAII
-{
-    std::thread & m_thread;
-public:
-    ThreadRAII(std::thread & threadObj) : m_thread(threadObj)
-    {
+//#include <iostream>
+//#include <string>
+//#include <thread>
+//void threadCallback(int x, std::string str)
+//{
+//    std::cout<<"Passed Number = "<<x<<std::endl;
+//    std::cout<<"Passed String = "<<str<<std::endl;
+//}
+//
+//class DisplayThread
+//{
+//public:
+//    void operator()(std::string& msg, int id)
+//    {
+//        std::cout<<"Display Thread Executing"<<std::endl;
+//        std::cout<<id<<": "<<msg <<std::endl;
+//        msg = "Pass by reference.";
+//    }
+//};
+//
+//int main()
+//{
+//    int x = 10;
+//    std::string str = "Sample String";
+//    std::thread threadObj(threadCallback, x, str);
+//    threadObj.join();
+//    
+////    std::string s = "Pass by value.";
+////    DisplayThread dp;
+////    std::thread t1((dp),std::ref(s),1);
+////    
+////    std::cout<<"main: "<<s <<std::endl;
+////    t1.join();
+//    
+//    
+//    return 0;
+//}
 
-    }
-    ~ThreadRAII()
+
+#include<iostream>
+#include<thread>
+#include<vector>
+#include<mutex>
+
+class Wallet
+{
+    int mMoney;
+    std::mutex mutex;
+public:
+    Wallet() :mMoney(0){}
+    int getMoney()   { 	return mMoney; }
+    void addMoney(int money)
     {
-        // Check if thread is joinable then detach the thread
-        if(m_thread.joinable())
+        std::lock_guard<std::mutex> lockGuard(mutex);
+        // In constructor it locks the mutex
+        
+        for(int i = 0; i < money; ++i)
         {
-            m_thread.detach();
+            // If some exception occurs at this
+            // poin then destructor of lockGuard
+            // will be called due to stack unwinding.
+            //
+            mMoney++;
         }
+        // Once function exits, then destructor
+        // of lockGuard Object will be called.
+        // In destructor it unlocks the mutex.
     }
 };
 
-void thread_function()
+int testMultithreadedWallet()
 {
-    for(int i = 0; i < 10000; i++);
-    std::cout<<"thread_function Executing"<<std::endl;
+    Wallet walletObject;
+    std::vector<std::thread> threads;
+    for(int i = 0; i < 5; ++i){
+        threads.push_back(std::thread(&Wallet::addMoney, &walletObject, 1000));
+    }
+    
+    for(int i = 0; i < threads.size() ; i++)
+    {
+        threads.at(i).join();
+    }
+    return walletObject.getMoney();
 }
 
 int main()
 {
-    std::thread threadObj(thread_function);
-
-    // If we comment this Line, then program will crash
-    ThreadRAII wrapperObj(threadObj);
+    
+    int val = 0;
+    
+    std::cout << "Total money: " << testMultithreadedWallet() << std::endl;
+    for(int k = 0; k < 1000; k++)
+    {
+        if((val = testMultithreadedWallet()) != 5000)
+        {
+            std::cout << "Error at count = "<<k<<"  Money in Wallet = "<<val << std::endl;
+//            break;
+        }
+    }
     return 0;
 }
