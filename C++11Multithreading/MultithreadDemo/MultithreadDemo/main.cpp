@@ -198,66 +198,22 @@
 //    return 0;
 //}
 
+#include <iostream>
+#include <thread>
+#include <future>
 
-#include<iostream>
-#include<thread>
-#include<vector>
-#include<mutex>
-
-class Wallet
+void initiazer(std::promise<int> * promObj)
 {
-    int mMoney;
-    std::mutex mutex;
-public:
-    Wallet() :mMoney(0){}
-    int getMoney()   { 	return mMoney; }
-    void addMoney(int money)
-    {
-        std::lock_guard<std::mutex> lockGuard(mutex);
-        // In constructor it locks the mutex
-        
-        for(int i = 0; i < money; ++i)
-        {
-            // If some exception occurs at this
-            // poin then destructor of lockGuard
-            // will be called due to stack unwinding.
-            //
-            mMoney++;
-        }
-        // Once function exits, then destructor
-        // of lockGuard Object will be called.
-        // In destructor it unlocks the mutex.
-    }
-};
-
-int testMultithreadedWallet()
-{
-    Wallet walletObject;
-    std::vector<std::thread> threads;
-    for(int i = 0; i < 5; ++i){
-        threads.push_back(std::thread(&Wallet::addMoney, &walletObject, 1000));
-    }
-    
-    for(int i = 0; i < threads.size() ; i++)
-    {
-        threads.at(i).join();
-    }
-    return walletObject.getMoney();
+    std::cout<<"Inside Thread"<<std::endl;
+    promObj->set_value(35);
 }
 
 int main()
 {
-    
-    int val = 0;
-    
-    std::cout << "Total money: " << testMultithreadedWallet() << std::endl;
-    for(int k = 0; k < 1000; k++)
-    {
-        if((val = testMultithreadedWallet()) != 5000)
-        {
-            std::cout << "Error at count = "<<k<<"  Money in Wallet = "<<val << std::endl;
-//            break;
-        }
-    }
+    std::promise<int> promiseObj;
+    std::future<int> futureObj = promiseObj.get_future();
+    std::thread th(initiazer, &promiseObj);
+    std::cout<<futureObj.get()<<std::endl;
+    th.join();
     return 0;
 }
