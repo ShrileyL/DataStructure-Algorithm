@@ -42,9 +42,10 @@ int main()
 //        }
 //    }
     
-    Matrix<int> A(5,5);
-    int x = 1;
+    Matrix<int> A(2,2);
     
+    int x = 1;
+    //assignment value for matrix A
     for (int i = 1; i <= A.rows(); ++i)
     {
         for (int j = 1; j <= A.cols(); ++j,++x)
@@ -54,4 +55,26 @@ int main()
     }
     
     A.show();
+    
+    Matrix<int> B(2,2);
+    
+    int y = 3;
+    //assignment value for matrix A
+    for (int i = 1; i <= A.rows(); ++i)
+    {
+        for (int j = 1; j <= A.cols(); ++j,++y)
+        {
+            B(i,j) = y;
+        }
+    }
+    
+    B.show();
+    
+    A+=B;
+    A.show();
+    
+//    Matrix<int> C (2,2);
+//    C = A + B;
+//    C.show();
+    
 }
