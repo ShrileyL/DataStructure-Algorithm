@@ -56,23 +56,24 @@ int main()
     
     A.show();
     
-    Matrix<int> B(2,2);
+    Matrix<int> B = A;
     
-    int y = 3;
-    //assignment value for matrix A
-    for (int i = 1; i <= A.rows(); ++i)
-    {
-        for (int j = 1; j <= A.cols(); ++j,++y)
-        {
-            B(i,j) = y;
-        }
-    }
     
-    B.show();
-    
-    A+=B;
-    A.show();
-    
+//    int y = 3;
+//    //assignment value for matrix A
+//    for (int i = 1; i <= A.rows(); ++i)
+//    {
+//        for (int j = 1; j <= A.cols(); ++j,++y)
+//        {
+//            B(i,j) = y;
+//        }
+//    }
+//    
+//    B.show();
+//    
+//    A+=B;
+//    A.show();
+//    
 //    Matrix<int> C (2,2);
 //    C = A + B;
 //    C.show();

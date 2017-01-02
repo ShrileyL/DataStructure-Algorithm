@@ -53,9 +53,10 @@ public:
     //overload operators for matrix to matrix mathematical operations
     Matrix<T> operator+=(const Matrix<T> &rmat)
     throw (std::runtime_error);
+    Matrix(const Matrix &rmat);
     
 private:
-    Matrix(const Matrix &rmat);
+
     UINT _rows, _cols;
     mutable T * _data;
     const bool auto_delete;
@@ -136,19 +137,11 @@ Matrix<T> Matrix<T>::operator+=(const Matrix<T>& rmat)  throw (std::runtime_erro
     if(_rows!=rmat.rows() || _cols!=rmat.cols())
         throw std::runtime_error("matrix dimension do not match!!");
     
-    UINT s_rows=rmat.rows();
-    UINT s_cols=rmat.cols();
-    Matrix<T> result(s_rows,s_cols);
+    for(UINT i=1; i<=rows(); ++i)
+        for(UINT j=1; j<=cols(); ++j)
+            this->_data[this->_cols * (i-1) + (j-1)]=this->_data[this->_cols * (i-1) + (j-1)] + rmat(i,j);
     
-    for(UINT i=1; i<=s_rows; ++i)
-    {
-        for(UINT j=1; j<=s_cols; ++j)
-        {
-            result(i,j)=this->_data[this->_cols * (i-1) + (j-1)]+rmat(i,j);
-        }
-    }
-    
-    return result;//copy out by value could cause performance deduct ??
+    return *this;//copy out by value could cause performance deduct ??
 }
 
 #endif /* Matrix_1_hpp */
