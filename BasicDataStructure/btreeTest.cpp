@@ -9,9 +9,11 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+
+#include "btree.hpp"
 using namespace std;
 
-main() 
+int main() 
 {
 	/*
     BinaryTree< int > bt;
