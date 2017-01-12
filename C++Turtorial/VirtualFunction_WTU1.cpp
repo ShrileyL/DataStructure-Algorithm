@@ -48,3 +48,6 @@ int main(int argc, char const *argv[])
 	delete msgConverterPtr;
 	return 0;
 }
+
+// OUTPUT:
+// Message Sent :: [START]Hello World[END]
