@@ -1,0 +1,11 @@
+CC=g++
+CFLAGS=-I
+
+app: main.o body.o 
+	$(CC) -o app main.o body.o
+
+main.o: main.cpp head.h
+	$(CC) -c main.cpp
+
+body.o: body.cpp head.h
+	$(CC) -c body.cpp
