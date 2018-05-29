@@ -29,12 +29,26 @@ int main()
     append(&head,5);
     append(&head,6);
     append(&head,7);
+    append(&head,2);
+    append(&head,3);
     printList(head);
 
     // head = reverselist(head);
     // printList(head);
 
     head = reverseBetween(head,3,6);
+    printList(head);
+
+
+    //test for deleteNode
+    deleteNode(head->next->next);
+    printList(head);
+
+    //sort
+    insertionSortList(head);
+    printList(head);
+
+    head = deleteDuplicates(head);
     printList(head);
     return 0;
 }

@@ -9,7 +9,7 @@ void printList(struct Node *n)
      printf(" %d ", n->data);
      n = n->next;
   }
-  cout << endl;
+  std::cout << std::endl;
 }
 
 void push(Node **head_ref, int new_data)
@@ -53,6 +53,12 @@ void append(Node **head_ref,int new_data)
 	last->next = new_node;
 	return;
 };
+
+void deleteNode(Node* node)
+{
+	node->data = node->next->data;
+	node->next = node->next->next;
+}
 
 Node* reverselist(Node *head)
 {
