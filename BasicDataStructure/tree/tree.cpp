@@ -9,6 +9,7 @@
 #include "tree.hpp"
 #include <iostream>
 #include <stack>
+#include <queue>
 
 void insert(node* root,int val)
 {
@@ -42,6 +43,8 @@ void insert(node* root,int val)
         }
     }
 };
+
+//recursion
 void preordertree(node* root)
 {
     if(root == NULL) return;
@@ -71,6 +74,8 @@ void inordertree(node* root)
         inordertree(root->rightchild);
     }
 }
+
+//iterative
 void iterpreordertree(node* root)
 {
     if(root == NULL) return;
@@ -124,6 +129,7 @@ void iterinordertree(node* root)
     
     while(cur || !nstack.empty())
     {
+        //ifcur is not NULL
         if(cur)
         {
             nstack.push(cur);
@@ -138,5 +144,104 @@ void iterinordertree(node* root)
         }
     }
     
+    std::cout << std::endl;
+}
+
+//morris method
+void morrisinorder(node* root)
+{
+    if(root == NULL) return;
+    node* cur = root,*pre = NULL;
+    
+    while (cur)
+    {
+        //if left subtree does not exit
+        if (cur->leftchild == NULL) {
+            std::cout << cur->data << " ";
+            cur = cur->rightchild;
+        }
+        //else find rightmost node of subtree, set its rightchild to cur
+        else
+        {
+            pre = cur->leftchild;
+            
+            while (pre->rightchild!=NULL && pre->rightchild!=cur) {
+                pre = pre->rightchild;
+            }
+            
+            //if find right most node of left subtree
+            if(pre->rightchild == NULL)
+            {
+                pre->rightchild = cur;
+                cur = cur->leftchild;
+            }
+            else
+            {
+                //if find here, means travel to leftmost subtree, so print and turn right
+                pre->rightchild = NULL;
+                std::cout << cur->data << " ";
+                cur = cur->rightchild;
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+void morrispreorder(node* root)
+{
+    node* cur = root;
+    
+    while (cur)
+    {
+        //if left subtree does not exit
+        if (cur->leftchild == NULL) {
+            std::cout << cur->data << " ";
+            cur = cur->rightchild;
+        }
+        //else find rightmost node of subtree, set its rightchild to cur
+        else
+        {
+            node* pre = cur->leftchild;
+            
+            while (pre->rightchild!=NULL && pre->rightchild!=cur) {
+                pre = pre->rightchild;
+            }
+            
+            //if find right most node of left subtree
+            if(pre->rightchild == NULL)
+            {
+                std::cout << cur->data << " ";
+                pre->rightchild = cur;
+                cur = cur->leftchild;
+            }
+            else
+            {
+                //if find here, means travel again, so does not print and turn right
+                pre->rightchild = NULL;
+                cur = cur->rightchild;
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+//breath first travesal
+//use queue
+void breathfirst(node* root)
+{
+    if(root == NULL) return;
+    
+    std::queue<node *> nqueue;
+    nqueue.push(root);
+    
+    while (!nqueue.empty()) {
+        node* cur = nqueue.front();
+        std::cout << cur->data << " ";
+        nqueue.pop();
+        if (cur->leftchild)
+            nqueue.push(cur->leftchild);
+        if(cur->rightchild)
+            nqueue.push(cur->rightchild);
+    }
     std::cout << std::endl;
 }

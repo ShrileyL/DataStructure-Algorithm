@@ -26,6 +26,8 @@ int main(void)
     std::cout <<std::endl;
     std::cout << "Recursion Pre order: " << std::endl;
     iterpreordertree(root);
+    std::cout << "Morris Pre order: " << std::endl;
+    morrispreorder(root);
     
     std::cout << "Post order: " << std::endl;
     postordertree(root);
@@ -38,11 +40,12 @@ int main(void)
     std::cout <<std::endl;
     std::cout << "Recursion In order: " << std::endl;
     iterinordertree(root);
+    std::cout << "Morris In order: " << std::endl;
+    morrisinorder(root);
     
+    std::cout << "Level first: " << std::endl;
+    breathfirst(root);
+    return 0;
+
     return 0;
 }
-//int main(int argc, const char * argv[]) {
-//    // insert code here...
-//    std::cout << "Hello, World!\n";
-//    return 0;
-//}

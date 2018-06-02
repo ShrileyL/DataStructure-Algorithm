@@ -35,7 +35,10 @@ void iterpostordertree(node* root);
 void iterinordertree(node* root);
 
 //morris method
+void morrispreorder(node* root);
 void morrisinorder(node* root);
-void morrispostorder(node* root);
+
+//breath first or level first travesal
+void breathfirst(node* root);
 
 #endif /* tree_hpp */
