@@ -41,4 +41,9 @@ void morrisinorder(node* root);
 //breath first or level first travesal
 void breathfirst(node* root);
 
+//merge two tree
+node* mergeTrees(node* t1, node* t2);
+//iterative solution
+node* itermergeTrees(node* t1, node* t2);
+
 #endif /* tree_hpp */

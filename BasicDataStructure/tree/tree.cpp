@@ -245,3 +245,65 @@ void breathfirst(node* root)
     }
     std::cout << std::endl;
 }
+
+node* mergeTrees(node* t1, node* t2)
+{
+    if(t1 == NULL)
+        return t1;
+    if(t2 == NULL)
+        return t2;
+
+    t1->data += t2->data;
+    t1->leftchild = mergeTrees(t1->leftchild,t2->leftchild);
+    t1->rightchild = mergeTrees(t1->rightchild,t2->rightchild);
+
+    return t1;
+}
+
+node* itermergeTrees(node* t1, node* t2)
+{
+    if(t1 == NULL)
+        return t1;
+    if(t2 == NULL)
+        return t2;
+
+    std::stack<node*> nstack ;
+    node* tmp = new node(0);
+    tmp->leftchild = t1;
+    tmp->rightchild = t2;
+    nstack.push(tmp);
+
+    node* n = new node(0);
+    while(!nstack.empty())
+    {
+        n = nstack.top();
+        nstack.pop();
+        if(n->leftchild == NULL || n->rightchild == NULL)
+        {
+            continue;
+        }
+        n->leftchild->data += n->rightchild->data;
+
+        if(n->leftchild->leftchild == NULL)
+            n->leftchild->leftchild = n->rightchild->leftchild;
+        else
+        {
+            node* t = new node(0);
+            t->leftchild = n->leftchild->leftchild;
+            t->rightchild = n->rightchild->leftchild;
+            nstack.push(t);
+        }
+
+        if(n->leftchild->rightchild == NULL)
+            n->leftchild->rightchild = n->rightchild->rightchild;
+        else
+        {
+            node* t = new node(0);
+            t->leftchild = n->leftchild->rightchild;
+            t->rightchild = n->rightchild->rightchild;
+            nstack.push(t);
+        }
+    }
+
+    return t1;
+}
