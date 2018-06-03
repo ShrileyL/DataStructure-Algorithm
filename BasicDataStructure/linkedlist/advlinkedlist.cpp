@@ -27,6 +27,7 @@ Node* insertionSortList(Node* head)
 	{
 		next = cur->next;
 		Node *p = dummy;
+		//travel to find the previous position to insert node
 		while(p->next!=NULL && p->next->data < cur->data)
 			p = p->next;
 
