@@ -63,6 +63,7 @@ int main(void)
     preordertree(t2);
     std::cout <<"Merge two trees: " << std::endl;
     preordertree(itermergeTrees(t1,t2));
+    std::cout << "max depth: " << maxDepthRecursive(t1) << std::endl;
 
     return 0;
 }

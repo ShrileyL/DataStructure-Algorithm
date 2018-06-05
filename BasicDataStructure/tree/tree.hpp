@@ -46,4 +46,10 @@ node* mergeTrees(node* t1, node* t2);
 //iterative solution
 node* itermergeTrees(node* t1, node* t2);
 
+//find max depth
+int maxDepthRecursive(node* root);
+int maxDepthQue1(node* root);
+int maxDepthQue2(node* root);
+int maxDepthStack(node* root);
+
 #endif /* tree_hpp */
