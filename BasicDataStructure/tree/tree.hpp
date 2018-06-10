@@ -52,4 +52,10 @@ int maxDepthQue1(node* root);
 int maxDepthQue2(node* root);
 int maxDepthStack(node* root);
 
+//
+bool isSameTree(node* p, node* q);
+int findTilt(node* root);
+int postordertilt(node* root, int &res);
+int abs(int a);
+
 #endif /* tree_hpp */

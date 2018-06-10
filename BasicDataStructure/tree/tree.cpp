@@ -307,3 +307,42 @@ node* itermergeTrees(node* t1, node* t2)
 
     return t1;
 }
+
+bool isSameTree(node* p, node* q)
+{
+
+    if(p==NULL && q==NULL)
+        return true;
+    if((p==NULL&&q!=NULL) || (NULL!=p)&&(NULL==q))
+        return false;
+    if(p->data != q->data)
+        return false;
+        
+    return isSameTree(p->leftchild,q->rightchild) && isSameTree(p->leftchild,q->rightchild);
+}
+
+int findTilt(node* root) 
+{
+    if(root == NULL) return 0;
+    int res = 0;
+    postordertilt(root,res);
+    return res;
+}
+    
+    //res: tilt result
+int postordertilt(node* root, int &res)
+{
+    if(root == NULL) return 0;
+    int leftsum = postordertilt(root->leftchild,res);
+    int rightsum = postordertilt(root->rightchild,res);
+    res += abs(leftsum - rightsum);
+    return leftsum + rightsum + root->data;
+}
+
+int abs(int a)
+{
+    if(a < 0)
+        return -a;
+    else
+        return a;
+}
