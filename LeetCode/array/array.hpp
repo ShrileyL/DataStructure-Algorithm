@@ -13,6 +13,13 @@
 #include <iostream>
 #include <vector>
 
+void display(std::vector<int>& v);
+void display(std::vector<int>& v, int size);
+
+int removeDuplicates(std::vector<int>& nums);
+int removeDuplicatesII(std::vector<int>& nums);
+std::vector<int> plusOne(std::vector<int>& digits);
+
 std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2);
 
 #endif /* array_hpp */
