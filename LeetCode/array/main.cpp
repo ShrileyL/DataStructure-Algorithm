@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 	//std::vector<int> v1,v2,v3;
-	int v[] = {9,9,9};
+	int v[] = {3,2,9};
 	std::vector<int> v1(v, v+sizeof(v)/sizeof(int)),v2;
 	v2 = plusOne(v1);
 	display(v2);

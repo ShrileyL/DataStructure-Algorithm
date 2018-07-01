@@ -77,6 +77,109 @@ std::vector<int> plusOne(std::vector<int>& digits)
     return res;
 }
 
+std::vector<std::vector<int> > generate(int numRows)
+{
+    std::vector<std::vector<int> > vals;
+    vals.resize(numRows);
+
+    // 1. layer k contains k element
+    // 2. the first and last element in kth layer are 1
+    // 3. for kth(k>2) layer,for element n(n > 1 && n < k):
+    //    A[k][n] = A[k-1][n-1] + A[k-1][n]
+    for (int i = 0; i < numRows; ++i)
+    {
+        // 1
+        vals[i].resize(i+1);
+        // 2
+        vals[i][0] = 1;
+        vals[i][vals[i].size()-1] = 1;
+        // 3
+        for (int j = 1; j < vals[i].size()-1; ++j)
+        {
+            vals[i][j] = vals[i-1][j-1]+vals[i-1][j];
+        }
+    }
+    return vals;
+}
+
+std::vector<int> getRow(int rowIndex)
+{
+    std::vector<int > vals;
+
+    vals.resize(rowIndex+1,1);
+
+    for (int i = 0; i < rowIndex+1; ++i)
+    {
+        for (int j = i-1; j >= 1 ; --j)
+        {//find element j, j > 0&& j < i
+            vals[j] = vals[j]+vals[j-1];
+        }
+    }
+    return vals;
+}
+
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
+{
+    if(n == 0 && m==0) return;
+    else if(m == 0)
+    {
+        for(int i = 0; i < n; i++)
+            nums1[i] = nums2[i];
+    }
+    else if(n == 0)
+        return;
+    int ix1 = m-1, ix2 = n-1;
+    for (int i = m+n-1; i >= 0; --i)
+    {
+        if(ix1>=0 && ix2>=0)
+        {
+        if(nums1[ix1]>nums2[ix2])
+            nums1[i] = nums1[ix1--];
+        else
+            nums1[i] = nums2[ix2--];
+        }
+        else if(ix1 >= 0)
+            nums1[i] = nums1[ix1--];
+        else
+            nums1[i] = nums2[ix2--];
+    }
+
+}
+
+// vector<int> twoSum(vector<int>& nums, int target)
+// {
+//     std::vector<int> res;
+//     if(nums.size() <= 1)
+//         return res;
+
+//     std::tr1::unordered_set<int,int> map;
+//     for (int i = 0; i < nums.size(); ++i)
+//         map[nums[i]] = i;
+
+//     for (int i = 0; i < nums.size(); ++i)
+//     {
+//         int rest_val = target - nums[i];
+//         if(map.find(rest_val) != map.end())
+//         {
+//             int index = map[rest_val];
+//             if (index==i)
+//                 continue;
+//             if(index < i)
+//             {
+//                 res.push_back(index);
+//                 res.push_back(i);
+//                 return res;
+//             }
+//             else
+//             {
+//                 res.push_back(i);
+//                 res.push_back(index);
+//                 return res;
+//             }
+//         }
+//     }
+// }
+
 vector<int> intersection(vector<int>& nums1, vector<int>& nums2)
 {
 	std::tr1::unordered_set<int> seen;
