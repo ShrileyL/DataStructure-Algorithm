@@ -29,7 +29,16 @@ std::vector<int> getRow(int rowIndex);
 //merge two array
 void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n);
 // Two sum
-// std::vector<int> twoSum(std::vector<int>& nums, int target);
+std::vector<int> twoSum(std::vector<int>& nums, int target);
+//three sum
+std::vector<std::vector<int> > threeSum(std::vector<int>& nums);
+std::vector<std::vector<int> > threeSumUlti(std::vector<int>& num, int target);
+//three sum closet
+int threeSumClosest(std::vector<int>& nums, int target);
+//4Sum
+std::vector<std::vector<int> > fourSum(std::vector<int>& nums, int target);
+void ksum(std::vector<int>& num, int start, int end, int target,int k, std::vector<int>& sol, std::vector<std::vector<int> >& allsol);
+void twosum(std::vector<int>& num, int start, int end, int target, std::vector<int>& sol, std::vector<std::vector<int> >& allsol);
 
 std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2);
 

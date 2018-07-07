@@ -9,6 +9,7 @@
 #include "array.hpp"
 #include <iostream>
 #include <tr1/unordered_set>
+#include <algorithm> 
 using namespace std;
 
 void display(std::vector<int>& v)
@@ -179,6 +180,71 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
 //         }
 //     }
 // }
+
+vector<int> twoSum(vector<int>& nums, int target)
+{
+    vector<int> res;
+    if(nums.size() < 2)
+        return res;
+    std::sort(nums.begin(),nums.end());
+    for(int i = 0; i < nums.size()-1;i++)
+    {
+        if(i > 0 && nums[i-1] == nums[i]) continue;
+        int j = i+1;
+        while( j < nums.size())
+        {
+            if(nums[i] + nums[j] == target)
+            {
+                res.push_back(nums[i]);
+                res.push_back(nums[j]);
+                j++;
+                while(nums[j] == nums[j-1]) j++;
+            }
+        }
+    }
+    return res;
+}
+
+vector<vector<int> > threeSum(vector<int>& nums) 
+{
+    return threeSumUlti(nums,0);
+}
+vector<vector<int> > threeSumUlti(vector<int>& num, int target)
+    {
+        vector<vector<int> > res;
+        if(num.size()<3) return res;
+        
+        std::sort(num.begin(),num.end());
+        for(int i = 0; i < num.size() - 1; i++)
+        {
+            if(i>0&&num[i]==num[i-1]) continue;
+            int left = i+1;
+            int right = num.size()-1;
+            while(left < right)
+            {
+                int curSum = num[left] + num[right];
+                int curTarget = target - num[i];
+                if(curSum == curTarget)
+                {
+                    vector<int> sul;
+                    sul.push_back(num[i]);
+                    sul.push_back(num[left]);
+                    sul.push_back(num[right]);
+                    res.push_back(sul);
+                    left++;
+                    right--;
+                    while(num[left]==num[left-1]) left++;
+                    while(num[right]==num[right+1]) right--;
+                }
+                else if(curSum < curTarget)
+                    left++;
+                else
+                    right--;
+            }
+        }
+        return res;
+    }
+
 
 vector<int> intersection(vector<int>& nums1, vector<int>& nums2)
 {
