@@ -43,6 +43,9 @@ void twosum(std::vector<int>& num, int start, int end, int target, std::vector<i
 int findMin(std::vector<int>& nums);
 //single element in sorted array
 int singleNonDuplicate(std::vector<int>& nums);
+//median of two sorted array
+double findMedianSortedArrays(const std::vector<int>& A,const std::vector<int>& B);
+int find_kth(std::vector<int>::const_iterator A,int m,std::vector<int>::const_iterator B,int n,int k);
 
 std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2);
 
