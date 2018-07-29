@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include "tree.hpp"
+#include "narraytree.hpp"
 using namespace std;
 
 int main(void)
