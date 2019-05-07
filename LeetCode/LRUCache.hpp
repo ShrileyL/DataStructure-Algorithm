@@ -1,7 +1,7 @@
 class LRUCache {
 public:
     LRUCache(int capacity) {
-        maxElement = capacity;
+        capacity_ = capacity;
         head = NULL;
         tail = NULL;
         keyToNode.clear();
@@ -35,14 +35,14 @@ private:
         Node(int k,int v):key(k),val(v),pre(NULL),next(NULL){}
     };
     
-    int maxElement;
+    int capacity_;
     Node *head;
     Node *tail;
     unordered_map<int,Node*> keyToNode;
     
     bool isFull()
     {
-        return (keyToNode.size() >= maxElement);
+        return (keyToNode.size() >= capacity_);
     }
     
     void insertToEnd(int k, int v){

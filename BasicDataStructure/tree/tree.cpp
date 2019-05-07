@@ -235,13 +235,17 @@ void breathfirst(node* root)
     nqueue.push(root);
     
     while (!nqueue.empty()) {
-        node* cur = nqueue.front();
-        std::cout << cur->data << " ";
-        nqueue.pop();
-        if (cur->leftchild)
-            nqueue.push(cur->leftchild);
-        if(cur->rightchild)
-            nqueue.push(cur->rightchild);
+        int n = nqueue.size();
+        for(int i = 0; i < n; i++)
+        {
+            node* cur = nqueue.front();
+            std::cout << cur->data << " ";
+            nqueue.pop();
+            if (cur->leftchild)
+                nqueue.push(cur->leftchild);
+            if(cur->rightchild)
+                nqueue.push(cur->rightchild);
+        }
     }
     std::cout << std::endl;
 }
