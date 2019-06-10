@@ -172,6 +172,65 @@ func (lst *List) RemoveAt(idx int) (ret Val_t){
 	return
 }
 
+//reverse list
+func reverse(head *ListNode) *ListNode{
+	dummy := &ListNode{Val:math.MaxInt32}
+	pre,cur := dummy,head
+	pre.Next = head
+	for cur != nil{
+		next := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = next
+	}
+	return pre
+}
+
+//reverse list between idx1 and idx2
+func (lst *List) Reverse (idx1,idx2 int){
+	if idx1 < 0 || idx1 >= lst.Len || idx2 < 0||idx2 >= lst.Len{
+		panic("index out of boundary")
+	}
+
+	if idx1 == idx2{
+		return
+	}
+
+	var start, end, pre, next *ListNode
+	cur := lst.Head
+
+	for i:=0 ; i <= idx2; i++{
+		if i < idx1{
+			pre = cur
+		}
+		if i == idx1{
+			start = cur
+		}
+		if i == idx2{
+			end = cur
+		}
+		cur = cur.Next
+	}
+	next = end.Next
+	end.Next = nil 
+
+	//relink idx1-idx2 list
+	if pre !=nil{
+		pre.Next = reverse(start)
+	}else{
+		lst.Head = reverse(start)
+	}
+
+	//relink
+	start.Next = next
+	lst.Tail = start
+
+	//update the tail
+	for lst.Tail.Next != nil{
+		lst.Tail = lst.Tail.Next
+	}
+}
+
 func (lst *List) Print(){
 	cur := lst.Head
 	if lst.Len > 0{
@@ -198,6 +257,8 @@ func ListTest(){
 	lst.Print()
 
 	lst.IntsToLst(nums)
+	lst.Print()
+	lst.Reverse(0,lst.Len-1)
 	lst.Print()
 	lst.PushBack(7)
 	lst.Print()
